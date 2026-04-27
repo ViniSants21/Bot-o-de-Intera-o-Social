@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       children: [
                         Text(
-                          '67',
+                          '128',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
