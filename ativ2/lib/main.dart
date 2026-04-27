@@ -10,11 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Botão de Interação Social',
+      title: 'Perfil Social',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 211, 15, 15)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 68, 26, 237)),
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Botão de Interação Social'),
+      home: const MyHomePage(title: 'Perfil Social'),
     );
   }
 }
@@ -29,14 +30,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,23 +37,102 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('Botão de Seguir: '),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            FollowButton(),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors:  [Color.fromARGB(255, 83, 68, 144), Colors.white],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircleAvatar(
+                  radius: 60,
+                  backgroundImage: AssetImage('assets/profile.jpg'), // Substitua por uma imagem real se disponível
+                  backgroundColor: Colors.grey.shade300,
+                  child: Icon(Icons.person, size: 60, color: Colors.white),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Vini',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '@_vinnisants',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Aluno SENAI de Desenvolvimento de Sistemas, CPV, 2008',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
+                  ),
+                ),
+                SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          '6.7K',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        Text(
+                          'Seguidores',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          '67',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        Text(
+                          'Seguindo',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 40),
+                FollowButton(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -76,17 +148,32 @@ class _FollowButtonState extends State<FollowButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          setState(() {
-            isFollowing = !isFollowing;
-          });
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(isFollowing ? Colors.grey : Colors.blue),
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          isFollowing = !isFollowing;
+        });
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isFollowing ? Colors.grey : Colors.blue,
+        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
         ),
-        child: Text(isFollowing ? 'Seguindo' : 'Seguir'),
+        elevation: 5,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            isFollowing ? 'Seguindo' : 'Seguir',
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
+          if (isFollowing) ...[
+            SizedBox(width: 10),
+            Icon(Icons.check, color: Colors.white),
+          ],
+        ],
       ),
     );
   }
